@@ -22,13 +22,19 @@ class XO
         $this->reset();
     }
 
+    /**
+     * @return void
+     */
     private function reset()
     {
-        $this->table = [[null, null, null], [null, null, null], [null, null, null]];
+        $this->table = [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]];
         $this->finished = false;
-        $this->player = 1;
+        $this->player = "X";
     }
 
+    /**
+     * @return void
+     */
     public function run()
     {
         $this->printTable();
@@ -73,8 +79,8 @@ class XO
     {
         $indexes = $this->getIndexesFromPosition($position);
 
-        if ($this->table[$indexes[0]][$indexes[1]]) {
-            throw new Exception("This box is taken, please pick another one");
+        if ($this->table[$indexes[0]][$indexes[1]] != " ") {
+            throw new Exception("This box is taken, please pick another one \n");
         }
 
         $this->table[$indexes[0]][$indexes[1]] = $this->player;
@@ -131,7 +137,7 @@ class XO
         return (
             $this->table[0][$column] == $this->table[1][$column] &&
             $this->table[1][$column] == $this->table[2][$column] &&
-            $this->table[0][$column] != null
+            $this->table[0][$column] != " "
         );
     }
 
@@ -144,7 +150,7 @@ class XO
         return (
             $this->table[$row][0] == $this->table[$row][1] &&
             $this->table[$row][1] == $this->table[$row][2] &&
-            $this->table[$row][0] != null
+            $this->table[$row][0] != " "
         );
     }
 
@@ -159,7 +165,7 @@ class XO
             $row + $column == 2 &&
             $this->table[0][2] == $this->table[2][0] &&
             $this->table[0][2] == $this->table[1][1] &&
-            $this->table[1][1] != null
+            $this->table[1][1] != " "
         );
     }
 
@@ -174,7 +180,7 @@ class XO
             $row == $column &&
             $this->table[0][0] == $this->table[1][1] &&
             $this->table[0][0] == $this->table[2][2] &&
-            $this->table[1][1] != null
+            $this->table[1][1] != " "
         );
     }
 
@@ -183,7 +189,7 @@ class XO
      */
     private function changePlayer()
     {
-        $this->player = ($this->player == 1) ? 0 : 1;
+        $this->player = ($this->player == "X") ? "O" : "X";
     }
 }
 
